@@ -13,7 +13,7 @@ end alu;
 architecture behavioral of alu is
     component carry_ripple_adder
         port (
-            a, b    : in  std_logic_vector (3 downto 0);
+            a, b : in  std_logic_vector (3 downto 0);
             ci   : in  std_logic;
             s    : out std_logic_vector (3 downto 0);
             co   : out std_logic
@@ -34,13 +34,14 @@ begin
     m_inverted(1) <= not m(1);
     m_inverted(2) <= not m(2);
     m_inverted(3) <= not m(3);
+	
 
     -- Addition
     adder_instance: carry_ripple_adder
         port map(
             a => n,
             b => m,
-            ci => '1', --?
+            ci => '0',
             s => adder_result,
             co => adder_carry_out
         );
@@ -63,7 +64,7 @@ begin
            adder_result;
 
     -- Carry out bit
-    cout <= (adder_carry_out xor sub) when operation_type = '0' else
+    cout <= (sub xor adder_carry_out) when operation_type = '0' else
            '0';
 end;
 
